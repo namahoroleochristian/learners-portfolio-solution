@@ -4,19 +4,19 @@ const { google } = require('googleapis');
 const multer = require('multer');
 const dotenv = require('dotenv');
 const stream = require('stream');
-const path=require("path")
+//const path=require("path")
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Serve static files from the frontend
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
+//app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 // Fallback route for SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+// });
 
 // Enable CORS
 app.use(cors());
