@@ -6,7 +6,7 @@
   <div>
     <form @submit.prevent="handleFileUpload">
       <input type="file" @change="handleFileChange" />
-      <button type="submit">Upload</button>
+      <button type="submit">click to upload</button>
     </form>
 
     <div v-if="uploadStatus">
