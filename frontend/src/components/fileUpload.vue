@@ -1,4 +1,8 @@
 <template>
+  <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574536932064178"
+     crossorigin="anonymous"></script>
+  </head>
   <div>
     <form @submit.prevent="handleFileUpload">
       <input type="file" @change="handleFileChange" />
