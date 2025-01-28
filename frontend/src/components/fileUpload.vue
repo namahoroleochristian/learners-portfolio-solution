@@ -1,7 +1,6 @@
 <template>
   <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5574536932064178"
-     crossorigin="anonymous"></script>
+   
   </head>
   <div>
     <form @submit.prevent="handleFileUpload">
@@ -42,7 +41,7 @@ export default {
       try {
         this.uploadStatus = 'Uploading...';
 
-        const response = await axios.post('https://studpms.onrender.com/upload', formData, {
+        const response = await axios.post('http://localhost:8000/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
