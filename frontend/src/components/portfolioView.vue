@@ -22,7 +22,7 @@
     methods: {
       async fetchPortfolio() {
         try {
-          const response = await fetch("http://localhost:3000/portfolio");
+          const response = await fetch("http://localhost:8000/portfolio/list");
           if (response.ok) {
             this.portfolioFiles = await response.json();
           } else {

@@ -1,11 +1,11 @@
 <!-- frontend/src/components/Login.vue -->
 <template>
-  <div>
-    <h1>Login</h1>
-    <form @submit.prevent="login">
-      <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+  <div class="flex w-full h-screen flex-col justify-center items-center">
+    <form @submit.prevent="login" class="flex w-3/6 flex-col bg-slate-200 p-16 rounded-xl shadow-lg border border-gray-100 items-center">
+      <h1 class="text-center mt-3 font-mono text-4xl font-bold mb-10 ">Login</h1>
+      <input v-model="email" type="email" class="p-2 bg-slate-300 m-2 w-full rounded-lg  outline-none  font-mono text-xl focus:ring-2 ring-blue-300" placeholder="Email" required />
+      <input v-model="password" type="password" class="p-2 bg-slate-300 m-2 w-full rounded-lg  outline-none font-mono  text-xl  focus:ring-2 ring-blue-300" placeholder="Password" required />
+      <button type="submit" class="bg-slate-600 w-90  py-3  text-xl font-mono mt-10 rounded-xl text-white hover:  hover:bg-slate-700">Login</button>
     </form>
   </div>
 </template>

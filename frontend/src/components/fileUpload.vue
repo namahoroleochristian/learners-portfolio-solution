@@ -2,15 +2,18 @@
   <head>
    
   </head>
-  <div>
-    <form @submit.prevent="handleFileUpload">
-      <input type="file" @change="handleFileChange" />
-      <button type="submit">click to upload</button>
+  <div class="m-25   ">
+    <form @submit.prevent="handleFileUpload" class="min-h-120 border border-gray-200 shadow-2xl rounded-4xl" >
+      <h1 class="text-4xl font-bold text-center font-mono p-8 ">Upload Your Portfolio</h1>
+      <div class="flex justify-center mt-25">
+      <input type="file" name="upload" id="upload" @change="handleFileChange" class="rounded-lg text-xl h-25 font-mono cursor-pointer p-4 " placeholder="Select a file " />
+      <button type="submit" class="bg-teal-600 p-2 rounded-lg text-xl font-mono cursor-pointer text-white h-16 hover:bg-teal-500">click to upload</button>
+    </div>
+    <div v-if="uploadStatus" class="flex justify-center text-center text-xl h-16 bg-red-100 p-4 w-5/6 text-red-800 m-25 mt-10    ">
+      <p class="align-center">** {{ uploadStatus }}</p>
+    </div>
     </form>
 
-    <div v-if="uploadStatus">
-      <p>{{ uploadStatus }}</p>
-    </div>
   </div>
 </template>
 

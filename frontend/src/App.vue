@@ -2,17 +2,22 @@
   <head>
   </head>
   <div id="app">
-    <FileUpload />
+    <Home /> 
   </div>
 </template>
 
 <script>
-import FileUpload from './components/fileUpload.vue';
+
+import Home from './views/Home.vue';
+
+
 
 export default {
   name: 'App',
   components: {
-    FileUpload
+    Home,
+    
   }
 };
+
 </script>
