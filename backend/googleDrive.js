@@ -1,7 +1,9 @@
-// googleDrive.js
 const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
+
+const DRIVE_FOLDER_ID = process.env.DRIVE_FOLDER_ID;
 
 // Google OAuth setup
 const oauth2Client = new google.auth.OAuth2(
@@ -10,16 +12,22 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
+// Set the refresh token (this is the critical fix)
+oauth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+
 // This function will upload the file to Google Drive
 async function uploadFile(filePath, folderId, accessToken) {
   const drive = google.drive({ version: 'v3', auth: oauth2Client });
-
-  oauth2Client.setCredentials({ access_token: accessToken });
-
+  
+  // Optionally, if you have an access token, you can set it
+  if (accessToken) {
+    oauth2Client.setCredentials({ access_token: accessToken });
+  }
+  
   try {
     const fileMetadata = {
       name: path.basename(filePath),
-      parents: [folderId], // Upload to a specific folder (folderId is passed as a parameter)
+      parents: [folderId],
     };
 
     const media = {
@@ -33,10 +41,27 @@ async function uploadFile(filePath, folderId, accessToken) {
       fields: 'id',
     });
 
-    return file.data.id; // Return the file ID
+    return file.data.id;
   } catch (error) {
     throw new Error('Error uploading file: ' + error.message);
   }
 }
 
-module.exports = { uploadFile };
+// Function to list files in the specified folder
+async function listFiles() {
+  try {
+    const drive = google.drive({ version: 'v3', auth: oauth2Client });
+    const response = await drive.files.list({
+      q: `'${DRIVE_FOLDER_ID}' in parents`,
+      fields: 'files(id, name)',
+    });
+    console.log('Files:', response.data.files);
+    return response.data.files;
+    
+  } catch (error) {
+    console.error('Error in listFiles:', error.message);
+    throw error;
+  }
+}
+
+module.exports = { uploadFile, listFiles };

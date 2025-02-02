@@ -1,8 +1,8 @@
-const express = require('express');
-const multer = require('multer');
-const { uploadFile, listFiles } = require('../googleDrive');
+import { Router } from 'express';
+import multer from 'multer';
+import { uploadFile, listFiles } from '../googleDrive';
 
-const router = express.Router();
+const router = Router();
 const upload = multer({ dest: 'uploads/' }); // Temporary storage before uploading to Google Drive
 
 // Route for uploading a portfolio file
@@ -25,4 +25,4 @@ router.get('/portfolio/list', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

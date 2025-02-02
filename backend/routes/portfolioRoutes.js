@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const googleDriveController = require('../controllers/googleDriveController');
+import { Router } from 'express';
+const router = Router();
+import { uploadPortfolio, getPortfolios } from '../controllers/googleDriveController';
 
-router.post('/upload', googleDriveController.uploadPortfolio);
-router.get('/list', googleDriveController.getPortfolios);
+router.post('/upload', uploadPortfolio);
 
-module.exports = router;
+router.get('/list', getPortfolios);
+
+export default router;

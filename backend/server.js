@@ -4,6 +4,7 @@ const { google } = require('googleapis');
 const multer = require('multer');
 const dotenv = require('dotenv');
 const stream = require('stream');
+const { getPortfolios } = require('./controllers/googleDriveController');
 //const path=require("path")
 dotenv.config();
 
@@ -19,7 +20,8 @@ const PORT = process.env.PORT || 8000;
 // });
 
 // Enable CORS
-app.use(cors());
+const allowedOrigins =  ["http://localhost:8000","http://localhost:5173"]
+app.use(cors({origin : allowedOrigins}));
 
 // Load environment variables
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -71,7 +73,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.status(500).send('Error uploading file to Google Drive.');
   }
 });
-
+app.get('/list',getPortfolios)
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
