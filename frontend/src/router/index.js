@@ -6,6 +6,7 @@ import Login from '../components/Login.vue';
 import HomePage from '../components/HomePage.vue';
 import FileUpload from '../components/fileUpload.vue';
 import PortfolioView from '../components/portfolioView.vue';
+import portfolioUpload from '../components/portfolioUpload.vue'
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: '/view',
     name: 'portfolioView',
     component: PortfolioView,
+  },
+  {
+    path: '/testCalledUpload',
+    name: 'testCalledUpload',
+    component: portfolioUpload,
   },
 ];
 
