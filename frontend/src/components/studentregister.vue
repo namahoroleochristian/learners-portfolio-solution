@@ -44,11 +44,11 @@ const activateAccount = () => {
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Activation code</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Password</label>
           <input 
-            type="text" 
-            v-model="text" 
-            placeholder="Enter your activation code  " 
+            type="password" 
+            v-model="password" 
+            placeholder="Enter your password  " 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />

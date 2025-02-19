@@ -32,9 +32,9 @@
          consequuntur dolore, nisi facilis obcaecati labore animi atque!</h4>
       <p class="text-lg text-gray-700 mt-5">Select your login option below:</p>
       <div class="mt-6 space-x-4 flex flex-wrap justify-center">
-        <RouterLink to="/studentlogin" class="px-6 py-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Student Login</RouterLink>
-        <RouterLink to="/parentslogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Parent Login</RouterLink>
-        <RouterLink to="/teacherlogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Teacher Login</RouterLink>
+        <RouterLink to="/studentlogin" class="px-6 py-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Student</RouterLink>
+        <RouterLink to="/parentslogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Parent </RouterLink>
+        <RouterLink to="/teacherlogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Teacher</RouterLink>
       </div>
     </main>
 

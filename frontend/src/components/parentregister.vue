@@ -27,11 +27,11 @@ const activateAccount = () => {
         
         
         <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Parents Phone number</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Parents Email</label>
           <input 
-            type="text" 
-            v-model="text" 
-            placeholder="Enter your phone number" 
+            type="email" 
+            v-model="email" 
+            placeholder="Enter your email" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
@@ -41,7 +41,7 @@ const activateAccount = () => {
           <input 
             type="text" 
             v-model="text" 
-            placeholder="Enter your phone number" 
+            placeholder="Enter your student name" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
@@ -49,9 +49,9 @@ const activateAccount = () => {
         <div>
           <label class="block text-sm font-medium text-gray-700 font-bold" >Enter your student email</label>
           <input 
-            type="text" 
-            v-model="text" 
-            placeholder="Enter your phone number" 
+            type="email" 
+            v-model="email" 
+            placeholder="Enter your student email" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />

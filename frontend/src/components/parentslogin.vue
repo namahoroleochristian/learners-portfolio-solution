@@ -20,9 +20,9 @@ const login = () => {
       <h2 class="text-2xl font-semibold text-center mb-6">Parent Log in</h2>
       <form @submit.prevent="login" class="space-y-4">
         <input 
-          type="text" 
-          v-model="text" 
-          placeholder="Phone number" 
+          type="email" 
+          v-model="email" 
+          placeholder="Enter your email" 
           class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
