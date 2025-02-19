@@ -1,6 +1,7 @@
 
 
 <script setup>
+import { ArrowLeftIcon } from '@heroicons/vue/24/solid';
 import { ref } from "vue";
 
 const email = ref("");
@@ -15,6 +16,7 @@ const login = () => {
   <div class="flex items-center justify-center min-h-screen bg-cover bg-center" 
        style="background-image: url('https://pfst.cf2.poecdn.net/base/image/0935f79852dea24c2fd6768a80c491e649f17294fd8005edbbef6672a8a536ee?w=1024&h=768&pmaid=289842107');">
     <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <RouterLink to="/" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink>
       <h2 class="text-2xl font-semibold text-center mb-6">Teachers Log in</h2>
       <form @submit.prevent="login" class="space-y-4">
         <input 
