@@ -1,12 +1,25 @@
 // frontend/src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Login from '../components/Login.vue';
+import Login from '../components/studentLogin.vue';
+import register from '../components/studentregister.vue';
+import dashboard from '../components/dashboard.vue';
+import parentslogin from '../components/parentslogin.vue';
+import teacherlogin from '../components/teacherlogin.vue';
+import parentregister from '../components/parentregister.vue';
+import studentdashboard from '../components/studentdashboard.vue';
+import parentdashboard from '../components/parentdashboard.vue';
+import admindashboard from '../components/admindashboard.vue';
+import teacherdashboard from '../components/teacherdashboard.vue';
 // import Home from '../views/Home.vue';
 import HomePage from '../components/HomePage.vue';
 import FileUpload from '../components/fileUpload.vue';
 import PortfolioView from '../components/portfolioView.vue';
 import portfolioUpload from '../components/portfolioUpload.vue'
+import Studentregister from '../components/studentregister.vue';
+import Admindashboard from '../components/admindashboard.vue';
+import Parentdashboard from '../components/parentdashboard.vue';
+import Studentdashboard from '../components/studentdashboard.vue';
 
 const routes = [
   {
@@ -15,10 +28,36 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/Login',
+    path:'/dashboard',
+    name:'/dashboard',
+    component:dashboard
+  },
+  {
+path:'/studentregister',
+name:'studentregister',
+component:Studentregister,
+  },
+  {
+   path:'/parentregister',
+   name:'parentregister',
+   component:parentregister,
+  },
+  {
+    path: '/studentLogin',
     name: 'Login',
     component: Login,
   },
+  {
+   path:'/parentslogin',
+   name:'parentslogin',
+   component:parentslogin,
+  },
+  {
+   path:'/teacherlogin',
+   name:'teacherlogin',
+   component:teacherlogin,
+  },
+ 
   {
     path: '/Upload',
     name: 'Upload',
@@ -33,7 +72,27 @@ const routes = [
     path: '/testCalledUpload',
     name: 'testCalledUpload',
     component: portfolioUpload,
+  },{
+    path:'/studentdashboard',
+    name:'studentdashboard',
+    component:Studentdashboard,
+
   },
+  {
+    path:'/parentdashboard',
+    name:'parentdashboard',
+    component:Parentdashboard,
+  },
+  {
+path:'/teacherdashboard',
+name:'teacherdashboard',
+component:teacherdashboard
+  },
+  {
+    path:'/admindashboard',
+    name:'admindashboard',
+    component:admindashboard,
+  }
 ];
 
 const router = createRouter({
