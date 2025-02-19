@@ -1,16 +1,18 @@
-const express = require('express');
-const cors = require('cors'); // Import CORS
-const { google } = require('googleapis');
-const multer = require('multer');
-const dotenv = require('dotenv');
-const stream = require('stream');
-const { getPortfolios } = require('./controllers/googleDriveController');
+import express from 'express';
+import cors from 'cors'; // Import CORS
+import { google } from 'googleapis';
+import multer from 'multer';
+import dotenv from 'dotenv';
+import stream from 'stream';
+import { getPortfolios  } from './controllers/googleDriveController.js';
+import {  ConnectDB } from './db/db.config.js'
+import user_router from './routes/userRoutes.js';
 //const path=require("path")
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-
+ConnectDB();
 // Serve static files from the frontend
 //app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
@@ -22,6 +24,13 @@ const PORT = process.env.PORT || 8000;
 // Enable CORS
 const allowedOrigins =  ["http://localhost:8000","http://localhost:5173"]
 app.use(cors({origin : allowedOrigins}));
+
+// Configure user Routes for handling Auth processes
+app.use('/api/Users',user_router)
+
+
+
+
 
 // Load environment variables
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -73,6 +82,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.status(500).send('Error uploading file to Google Drive.');
   }
 });
+
+
+
 app.get('/list',getPortfolios)
 // Start the server
 app.listen(PORT, () => {
