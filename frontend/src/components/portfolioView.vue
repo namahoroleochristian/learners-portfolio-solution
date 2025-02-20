@@ -22,7 +22,7 @@
     methods: {
   async fetchPortfolio() {
     try {
-      const response = await fetch("http://localhost:8000/list");
+      const response = await fetch("http://localhost:8000/api/portfolio/list");
       if (response.ok) {
         const data = await response.json();
         console.log(data);  // Inspect the response structure

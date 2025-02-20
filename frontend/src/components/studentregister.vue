@@ -5,13 +5,13 @@ import { ref } from "vue";
 
 const registrationNumber = ref("");
 const email = ref("");
-const activationCode = ref("");
+const password = ref("");
 
 const activateAccount = () => {
   console.log("Activating account with:", {
     registrationNumber: registrationNumber.value,
     email: email.value,
-    activationCode: activationCode.value,
+    password: password.value,
   });
 };
 </script>

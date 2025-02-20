@@ -1,7 +1,9 @@
-const { google } = require('googleapis');
-const fs = require('fs');
-const path = require('path');
-require('dotenv').config();
+import { google } from 'googleapis'
+import fs from 'fs'
+import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 const DRIVE_FOLDER_ID = process.env.DRIVE_FOLDER_ID;
 
@@ -64,4 +66,4 @@ async function listFiles() {
   }
 }
 
-module.exports = { uploadFile, listFiles };
+export {uploadFile, listFiles} ;

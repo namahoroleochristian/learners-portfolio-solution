@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="portfolio-upload">
     <h2>Portfolio Upload</h2>
 
@@ -43,10 +43,9 @@ export default {
 
       const formData = new FormData();
       formData.append('portfolioName', this.portfolioName);
-      formData.append('file', this.selectedFile);
+      formData.append('file', this.selectedFile); 
 
-      try {
-        const response = await axios.post('/api/portfolio/upload', formData, {
+      try {        const response = await axios.post('/api/portfolio/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -61,7 +60,7 @@ export default {
     },
     async fetchPortfolios() {
       try {
-        const response = await axios.get('/api/portfolio/list');
+        const response = await axios.get('https://8000/api/portfolio/list');
         this.uploadedFiles = response.data.files;
       } catch (error) {
         console.error('Failed to fetch portfolios:', error);
@@ -81,4 +80,9 @@ export default {
 .message {
   color: green;
 }
-</style>
+</style> -->
+<template>
+
+</template>
+<script>
+</script>

@@ -1,6 +1,6 @@
-const { uploadFile, listFiles } = require('../googleDrive');
-const path = require('path');
-const multer = require('multer');
+import { uploadFile, listFiles } from '../googleDrive.js'
+import path from 'path'
+import multer from 'multer'
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).single('file');
 
-exports.uploadPortfolio = (req, res) => {
+export const uploadPortfolio = (req, res) => {
   upload(req, res, async (err) => {
     if (err) return res.status(500).json({ message: 'File upload failed' });
 
@@ -25,7 +25,7 @@ exports.uploadPortfolio = (req, res) => {
   });
 };
 
-exports.getPortfolios = async (req, res) => {
+export const getPortfolios = async (req, res) => {
   try {
     const files = await listFiles();
     res.status(200).json(files);

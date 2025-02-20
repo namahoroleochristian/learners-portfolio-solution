@@ -7,6 +7,7 @@ import stream from 'stream';
 import { getPortfolios  } from './controllers/googleDriveController.js';
 import {  ConnectDB } from './db/db.config.js'
 import user_router from './routes/userRoutes.js';
+import router from './routes/fileRoutes.js';
 //const path=require("path")
 dotenv.config();
 
@@ -51,39 +52,39 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Route to handle file upload
-app.post('/upload', upload.single('file'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
+// app.post('/upload', upload.single('file'), async (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('No file uploaded.');
+//   }
 
-  try {
-    const fileMetadata = {
-      name: req.file.originalname,
-      parents: [DRIVE_FOLDER_ID],
-    };
+//   try {
+//     const fileMetadata = {
+//       name: req.file.originalname,
+//       parents: [DRIVE_FOLDER_ID],
+//     };
 
-    const bufferStream = new stream.PassThrough();
-    bufferStream.end(req.file.buffer);
+//     const bufferStream = new stream.PassThrough();
+//     bufferStream.end(req.file.buffer);
 
-    const media = {
-      mimeType: req.file.mimetype,
-      body: bufferStream,
-    };
+//     const media = {
+//       mimeType: req.file.mimetype,
+//       body: bufferStream,
+//     };
 
-    const driveResponse = await drive.files.create({
-      resource: fileMetadata,
-      media: media,
-      fields: 'id',
-    });
+//     const driveResponse = await drive.files.create({
+//       resource: fileMetadata,
+//       media: media,
+//       fields: 'id',
+//     });
 
-    res.status(200).json({ message: 'File uploaded successfully', fileId: driveResponse.data.id });
-  } catch (error) {
-    console.error('Error uploading file:', error.response ? error.response.data : error.message);
-    res.status(500).send('Error uploading file to Google Drive.');
-  }
-});
+//     res.status(200).json({ message: 'File uploaded successfully', fileId: driveResponse.data.id });
+//   } catch (error) {
+//     console.error('Error uploading file:', error.response ? error.response.data : error.message);
+//     res.status(500).send('Error uploading file to Google Drive.');
+//   }
+// });
 
-
+app.use('/api/portfolio',router)
 
 app.get('/list',getPortfolios)
 // Start the server
