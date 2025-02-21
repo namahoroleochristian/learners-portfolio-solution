@@ -1,9 +1,10 @@
 // frontend/src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Login from '../components/studentLogin.vue';
+import Login from '../components/studentlogin.vue';
+
 import register from '../components/studentregister.vue';
-import dashboard from '../components/dashboard.vue';
+
 import parentslogin from '../components/parentslogin.vue';
 import teacherlogin from '../components/teacherlogin.vue';
 import parentregister from '../components/parentregister.vue';
@@ -27,11 +28,7 @@ const routes = [
     name: 'Home',
     component: HomePage,
   },
-  {
-    path:'/dashboard',
-    name:'/dashboard',
-    component:dashboard
-  },
+ 
   {
 path:'/studentregister',
 name:'studentregister',

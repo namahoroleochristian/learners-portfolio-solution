@@ -17,7 +17,7 @@ ConnectDB();
 
 // Enable CORS
 const allowedOrigins = ["http://localhost:8000", "http://localhost:5173"];
-app.use(cors({ origin: allowedOrigins }));
+app.use(cors({ origin: allowedOrigins ,credentials: true,}));
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -79,6 +79,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 // Portfolios route
 app.use('/api/portfolio', router);
 app.get('/list', getPortfolios);
+
 
 // Start the server
 app.listen(PORT, () => {

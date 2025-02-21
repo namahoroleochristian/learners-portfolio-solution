@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
 
-const UserSchema = mongoose.Schema({
+const StudentSchema = mongoose.Schema({
     name :{
         type:String,
         required :true
+    },
+    registrationNumber: {
+        type:Number,
+        unique:true,
+        required :true
+
     },
     email :{
         type:String,
@@ -28,6 +34,6 @@ const UserSchema = mongoose.Schema({
     verificationToken:String,
     verificationTokenExpiresAt:Date,
 },{timestamps:true})
-const User =  mongoose.model("Users",UserSchema) 
-export default User
+const Student =  mongoose.model("students",StudentSchema) 
+export default Student
 // lastLogin:Date.now,
