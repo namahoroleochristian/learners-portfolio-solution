@@ -15,7 +15,7 @@ import teacherdashboard from '../components/teacherdashboard.vue';
 import HomePage from '../components/HomePage.vue';
 import FileUpload from '../components/fileUpload.vue';
 import PortfolioView from '../components/portfolioView.vue';
-import portfolioUpload from '../components/portfolioUpload.vue'
+
 import Studentregister from '../components/studentregister.vue';
 import Admindashboard from '../components/admindashboard.vue';
 import Parentdashboard from '../components/parentdashboard.vue';
@@ -69,10 +69,6 @@ component:Studentregister,
     component: PortfolioView,
   },
   {
-    path: '/testCalledUpload',
-    name: 'testCalledUpload',
-    component: portfolioUpload,
-  },{
     path:'/studentdashboard',
     name:'studentdashboard',
     component:Studentdashboard,

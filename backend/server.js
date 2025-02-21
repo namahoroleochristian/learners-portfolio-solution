@@ -53,7 +53,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileMetadata = {
       name: req.file.originalname,
-      parents: ["19_0UFQ1gmU8wssGIbTTPBkzQyW1w8Ldh"],
+      parents: [DRIVE_FOLDER_ID],
     };
 
     const bufferStream = new stream.PassThrough();

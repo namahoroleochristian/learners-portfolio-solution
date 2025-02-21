@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
-  "type": "module", 
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vue-hero-icons/outline": "^1.7.2",
+    "@vue-hero-icons/solid": "^1.7.2",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",

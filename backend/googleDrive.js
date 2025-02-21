@@ -6,7 +6,6 @@ dotenv.config()
 
 
 const DRIVE_FOLDER_ID = process.env.DRIVE_FOLDER_ID;
-console.log(DRIVE_FOLDER_ID);
 
 // Google OAuth setup
 const oauth2Client = new google.auth.OAuth2(
@@ -30,7 +29,7 @@ async function uploadFile(filePath, folderId, accessToken) {
   try {
     const fileMetadata = {
       name: path.basename(filePath),
-      parents: DRIVE_FOLDER_ID,
+      parents: [folderId],
     };
 
     const media = {
@@ -55,21 +54,16 @@ async function listFiles() {
   try {
     const drive = google.drive({ version: 'v3', auth: oauth2Client });
     const response = await drive.files.list({
-      q: `'${DRIVE_FOLDER_ID}' in parents and trashed=false`,  // Avoid trashed files
-      fields: 'files(id, name, owners, mimeType)',
+      q: `'${DRIVE_FOLDER_ID}' in parents`,
+      fields: 'files(id, name)',
     });
-
     console.log('Files:', response.data.files);
-    if (!response.data.files.length) {
-      console.warn('⚠ No files found. Check folder ID & permissions.');
-    }
-
     return response.data.files;
+    
   } catch (error) {
-    console.error('Error in listFiles:', error.response ? error.response.data : error.message);
+    console.error('Error in listFiles:', error.message);
     throw error;
   }
 }
-
 
 export {uploadFile, listFiles} ;
