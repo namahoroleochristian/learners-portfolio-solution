@@ -28,6 +28,6 @@ const UserSchema = mongoose.Schema({
     verificationToken:String,
     verificationTokenExpiresAt:Date,
 },{timestamps:true})
-const UserModel =  mongoose.model("Users",UserSchema) 
+const User =  mongoose.model("Users",UserSchema) 
 export default User
 // lastLogin:Date.now,
