@@ -150,7 +150,7 @@
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-semibold">Parents List</h3>
            
-            <button @click="openAddparentForm"  class="bg-blue-500 text-white p-2 rounded hover:bg-blue-400 transition">
+            <button @click="openAddParentForm"  class="bg-blue-500 text-white p-2 rounded hover:bg-blue-400 transition">
            Add New Parent
             </button>
           </div>

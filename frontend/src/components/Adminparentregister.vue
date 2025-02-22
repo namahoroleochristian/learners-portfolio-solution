@@ -2,104 +2,64 @@
 <script setup>
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid';
 import { ref } from "vue";
-import router from '../router';
 
 const registrationNumber = ref("");
 const email = ref("");
-const password = ref("");
-const names = ref("");
+const activationCode = ref("");
 
-const goBack = () => {
-  this.activePage = "manageUsers"
-}
-
-const studentRegister =async () => {
-  try {
-    const response = await fetch("http://localhost:8000/api/Users/studentRegistration", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: names.value,
-      email: email.value,
-      role: "student",
-      password: password.value,
-      registrationNumber: registrationNumber.value,
-
-    }),
-    credentials: "include"
-  })
-  const data = await response.json();
-
-if (!response.ok) {
-  throw new Error(data.message || "registration failed");
-}
-
-console.log("registration successful:", data);
-// router.push("");
-  } catch (error) {
-    // errorMessage.value = error.message; 
-    console.log(error.message);
-    
-  }
-  
- 
+const activateAccount = () => {
+  console.log("Activating account with:", {
+    registrationNumber: registrationNumber.value,
+    email: email.value,
+    activationCode: activationCode.value,
+  });
 };
 </script>
 
 <template>
-  
-    
-  <form @submit.prevent="studentRegister" class="space-y-4 p-6 min-w-full">
-    <button @click="goBack" class=" hover:cursor-pointer ">
-        <ArrowLeftIcon class="w-6 h-6 text-gray-700 hover:text-blue-700 " />
-      </button>
-    <h2 class="text-2xl font-semibold text-center mb-6">Student register </h2>
+  <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <RouterLink to="/parentslogin" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink>
+      <h2 class="text-2xl font-semibold text-center mb-6">Parent Acount Activation </h2>
+      <form @submit.prevent="activateAccount" class="space-y-4">
+        <h3 class="text-center">Activate your account</h3>
+        
+        
         <div>
-          <label class="block text-sm font-medium text-gray-700 " >Names</label>
-          <input 
-            type="text" 
-            v-model="names" 
-            placeholder="Enter Student names" 
-            class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
-            
-          />
-        </div> 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 " >Registration Number</label>
-          <input 
-            type="number" 
-            v-model="registrationNumber" 
-            placeholder="Enter Student Registration Number" 
-            class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
-            
-          />
-        </div> 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >  Email</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Parents Email</label>
           <input 
             type="email" 
             v-model="email" 
-            placeholder="Enter Student email" 
+            placeholder="Enter your email" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Password</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter your student name</label>
           <input 
-            type="password" 
-            v-model="password" 
-            placeholder="Enter Student password  " 
+            type="text" 
+            v-model="text" 
+            placeholder="Enter your student name" 
+            class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+            
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter your student email</label>
+          <input 
+            type="email" 
+            v-model="email" 
+            placeholder="Enter your student email" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
         </div>
         <button 
           type="submit" 
-          class="w-full bg-blue-500 hover:cursor-pointer text-white text-xl p-3 rounded hover:bg-blue-900 transition">
-        Register Student
+          class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition">
+          Activate
         </button>
       </form>
-    
+    </div>
 
 </template>

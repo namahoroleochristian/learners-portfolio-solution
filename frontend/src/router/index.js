@@ -13,6 +13,8 @@ import studentdashboard from '../components/studentdashboard.vue';
 import parentdashboard from '../components/parentdashboard.vue';
 import admindashboard from '../components/admindashboard.vue';
 import teacherdashboard from '../components/teacherdashboard.vue';
+import Adminparentregister from '../components/Adminparentregister.vue';
+
 // import Home from '../views/Home.vue';
 import HomePage from '../components/HomePage.vue';
 import FileUpload from '../components/fileUpload.vue';
@@ -91,7 +93,13 @@ component:teacherdashboard
     path:'/admindashboard',
     name:'admindashboard',
     component:admindashboard,
+  },
+  {
+    path:'/Adminparentregister',
+    name:'Adminparentregister',
+    component:Adminparentregister,
   }
+
 ];
 
 const router = createRouter({
