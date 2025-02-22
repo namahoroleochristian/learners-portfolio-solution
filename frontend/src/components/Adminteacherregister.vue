@@ -17,39 +17,43 @@ const activateAccount = () => {
 </script>
 
 <template>
-  <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-      <!-- <RouterLink to="/admindashbord" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink> -->
-      <h2 class="text-2xl font-semibold text-center mb-6">Parent Acount Activation </h2>
+  <div class="flex items-center justify-center min-h-screen bg-cover bg-center" 
+      >
+    <div class="bg-white p-8 rounded-lg ">
+      <!-- <RouterLink to="/admindashboard" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink> -->
+      <h2 class="text-2xl font-semibold text-center mb-6">Add Teacher</h2>
       <form @submit.prevent="activateAccount" class="space-y-4">
-        <h3 class="text-center">Activate your account</h3>
+        <h3 class="text-center">Activate Teacher account</h3>
         
         
         <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Parents Email</label>
-          <input 
-            type="email" 
-            v-model="email" 
-            placeholder="Enter your email" 
-            class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
-            
-          />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter your student name</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >full name</label>
           <input 
             type="text" 
             v-model="text" 
-            placeholder="Enter your student name" 
+            placeholder="Enter teacher name" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
         </div>
+      
         <div>
-          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter your student email</label>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter email</label>
           <input 
             type="email" 
             v-model="email" 
-            placeholder="Enter your student email" 
+            placeholder="Enter teacher email" 
+            class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+            
+          />
+        </div>
+           
+        <div>
+          <label class="block text-sm font-medium text-gray-700 font-bold" >Enter password</label>
+          <input 
+            type="password" 
+            v-model="password" 
+            placeholder="Enter teacher password" 
             class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
             
           />
@@ -61,5 +65,5 @@ const activateAccount = () => {
         </button>
       </form>
     </div>
-
+  </div>
 </template>

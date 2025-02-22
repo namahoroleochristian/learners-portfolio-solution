@@ -124,6 +124,9 @@
               Add New Teacher
             </button>
           </div>
+          <section v-if="showAddTeacherForm" class="p-8">
+        <Adminteacherregister />
+      </section>
 
           <div v-if="loadingTeachers" class="text-center p-8 bg-blue-400/40 backdrop-blur-md text-blue-900 text-2xl font-semibold hover:cursor-progress">Loading teachers...</div>
 
@@ -201,11 +204,12 @@ import AdminportfolioUpload from "./adminportfolioUpload.vue";
 import PortfolioView from "./adminportfolioView.vue";
 import Adminstudentregister from "./Adminstudentregister.vue";
 import Adminparentregister from "./Adminparentregister.vue";
+import Adminteacherregister from "./Adminteacherregister.vue";
 import router from "../router";
 
 export default {
   name: "AdminDashboard",
-  components: { AdminportfolioUpload, PortfolioView, Adminstudentregister,Adminparentregister},
+  components: { AdminportfolioUpload, PortfolioView, Adminstudentregister,Adminparentregister,Adminteacherregister},
   data() {
     return {
       activePage: "dashboard",
@@ -225,6 +229,7 @@ export default {
       showAddStudentForm: false, // Toggle for adding student form
       showAddTeacherForm: false, // Toggle for adding teacher form
       showAddParentForm: false, // Toggle for adding parent form
+      showAddTeacherForm:false,
     };
   },
   computed: {
