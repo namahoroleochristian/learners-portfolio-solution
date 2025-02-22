@@ -9,7 +9,7 @@ const user_router = Router()
  user_router.post('/studentLogin',studentlogin);
  user_router.post('/logout',logout)
  user_router.get('/getStudents',getAllStudents)
- user_router.delete('/deletestudent/:id',deleteStudent)
+ user_router.delete('/deletestudent/:id',deleteStudent);
  user_router.post('/checkAuth',checkAuth)
 
  export default user_router;

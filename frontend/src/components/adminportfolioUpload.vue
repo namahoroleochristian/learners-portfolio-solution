@@ -1,22 +1,45 @@
 <template>
    
-    <div class="max-h-screen mt-25 flex items-center justify-center"> 
-      <form @submit.prevent="handleFileUpload"
-        class=" border bg-white/60 backdrop-blur-xl border-gray-200 shadow-2xl rounded-4xl p-8 ">
-        <h1 class="text-4xl font-bold text-center font-mono mb-8">
-          Upload Portfolio
+    
+      <form
+        @submit.prevent="handleFileUpload"
+        class="min-h-100 min-w-5/6 bg-white/40 backdrop-blur-md  shadow-2xl rounded-xl pt-4 "
+      >
+      
+  
+        <h1 class="text-4xl text-blue-600 font-bold text-center font-mono pb-8">
+          Upload Your Portfolio
         </h1>
-        <div class="flex flex-col items-center space-y-4 p-6  rounded-xl shadow-lg w-full max-w-lg">
-          <label for="upload"
-            class="flex items-center space-x-4 bg-gray-100 hover:bg-gray-200 transition px-6 py-3 rounded-lg cursor-pointer shadow-inner border border-gray-300">
-            <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-8m0 8H8m4 0h4M4 12a8 8 0 1 1 16 0M4 12h16">
-              </path>
+        <div
+          class="flex flex-col items-strech-center justify-self-center space-y-4 p-6  rounded-xl shadow-2xl shadow-black w-full mt-12 max-w-lg"
+        >
+          <label
+            for="upload"
+            class="flex items-center space-x-4 bg-gray-100 hover:bg-gray-200 transition px-6 py-3 rounded-lg cursor-pointer shadow-inner border border-gray-300"
+          >
+            <svg
+              class="w-6 h-6 text-teal-600"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 16v-8m0 8H8m4 0h4M4 12a8 8 0 1 1 16 0M4 12h16"
+              ></path>
             </svg>
             <span class="text-gray-600 font-medium">Choose a file...</span>
           </label>
-          <input type="file" name="upload" id="upload" @change="handleFileChange" class="hidden" />
+          <input
+            type="file"
+            name="upload"
+            id="upload"
+            @change="handleFileChange"
+            class="hidden"
+          />
   
           <!-- Display selected file name -->
           <div v-if="selectedFile" class="text-gray-700 text-center">
@@ -25,41 +48,64 @@
   
           <!-- Display image preview if applicable -->
           <div v-if="previewUrl" class="mt-4">
-            <img :src="previewUrl" alt="File Preview" class="max-w-xs max-h-60 object-contain rounded-lg shadow-md" />
+            <img
+              :src="previewUrl"
+              alt="File Preview"
+              class="max-w-xs max-h-60 object-contain rounded-lg shadow-md"
+            />
           </div>
   
-          <button type="submit"
-            class="flex items-center  space-x-2 bg-teal-600 p-3 rounded-lg text-lg font-semibold cursor-pointer text-white   transition duration-300 ease-in-out hover:bg-teal-700 transform ">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 12h16M12 4v16"></path>
+          <button
+            type="submit"
+            class="flex items-center  space-x-2 bg-teal-600 p-3 rounded-lg text-lg font-semibold cursor-pointer text-white   transition duration-300 ease-in-out hover:bg-teal-700 transform "
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 12h16M12 4v16"
+              ></path>
             </svg>
             <span>Click to Upload</span>
           </button>
           <!-- Upload status messages -->
-          <div v-if="uploadStatus === 'Please select a file first.'"
-            class="flex justify-center text-center text-xl h-16 bg-red-100 p-4 w-5/6 text-red-800 mt-10">
-            <p class="align-center">** {{ uploadStatus }}</p>
-          </div>
-          <div v-if="uploadStatus === 'Uploading...'"
-            class="flex justify-center text-center text-xl h-16 bg-blue-100 p-4 w-5/6 text-blue-800 m-25 mt-10 hover:cursor-progress">
-            <p class="align-center">** {{ uploadStatus }} **</p>
-          </div>
-          <div v-if="uploadStatus === 'File uploaded successfully'"
-            class="flex justify-center text-center text-xl h-16 bg-green-200 p-4 w-5/6 text-green-800 m-25 mt-10">
-            <p class="align-center">** {{ uploadStatus }} **</p>
-          </div>
+          <div
+          v-if="uploadStatus === 'Please select a file first.'"
+          class="flex justify-center text-center text-xl h-16 bg-red-100 p-4 w-5/6 text-red-800 mt-10"
+        >
+          <p class="align-center">** {{ uploadStatus }}</p>
+        </div>
+        <div
+          v-if="uploadStatus === 'Uploading...'"
+          class="flex justify-center text-center text-xl h-16 bg-blue-100 p-4 w-5/6 text-blue-800 m-25 mt-10 hover:cursor-progress"
+        >
+          <p class="align-center">** {{ uploadStatus }} **</p>
+        </div>
+        <div
+          v-if="uploadStatus === 'File uploaded successfully'"
+          class="flex justify-center text-center text-xl h-16 bg-green-200 p-4 w-5/6 text-green-800 m-25 mt-10"
+        >
+          <p class="align-center">** {{ uploadStatus }} **</p>
+        </div>
         </div>
   
-  
+     
       </form>
-    </div>
-  
+   
+    
   </template>
   
-  <script>
+  <script >
   import axios from 'axios';
   import { RouterLink } from 'vue-router';
+  import { ArrowLeftIcon } from "@heroicons/vue/24/solid";
   
   export default {
     data() {
@@ -124,4 +170,10 @@
     },
   };
   </script>
-  
+  <style>
+  .bg-ldn{
+    background-image: url("../../public/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  </style>

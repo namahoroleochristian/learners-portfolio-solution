@@ -2,12 +2,16 @@
 <script setup>
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid';
 import { ref } from "vue";
+import router from '../router';
 
 const registrationNumber = ref("");
 const email = ref("");
 const password = ref("");
 const names = ref("");
 
+const goBack = () => {
+  this.activePage = "manageUsers"
+}
 
 const studentRegister =async () => {
   try {
@@ -46,7 +50,9 @@ console.log("registration successful:", data);
   
     
   <form @submit.prevent="studentRegister" class="space-y-4 p-6 min-w-full">
-    <RouterLink to="/admindashboard" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink>
+    <button @click="goBack" class=" hover:cursor-pointer ">
+        <ArrowLeftIcon class="w-6 h-6 text-gray-700 hover:text-blue-700 " />
+      </button>
     <h2 class="text-2xl font-semibold text-center mb-6">Student register </h2>
         <div>
           <label class="block text-sm font-medium text-gray-700 " >Names</label>
