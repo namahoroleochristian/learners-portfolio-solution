@@ -46,6 +46,7 @@
 
       <!-- Manage Users Page -->
       <main v-if="activePage === 'manageUsers'" class="p-8">
+        
         <nav class="bg-white/60 backdrop-blur-lg rounded-md p-4 mb-6">
           <ul class="flex items-center justify-around text-xl font-semibold">
             <li>
@@ -183,10 +184,58 @@
         </div>
       </main>
 
+      <div class=" bg-white/60 rounded-2xl backdrop-blur-md mt-20 w-5/6 ml-20">
+
       <!-- Other sections (Comments, Upload Portfolio, View Portfolios) remain unchanged -->
-      <main v-if="activePage === 'comments'" class="p-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <p class="text-center w-full">Comments section coming soon...</p>
-      </main>
+      <main v-if="activePage === 'comments'" class="p-10 grid grid-cols-1 sm:grid-cols-3 gap-4 ">
+
+<!-- Student Comments Card -->
+<div @click="showComments('students')" class="cursor-pointer bg-blue-100 p-6 rounded-lg hover:bg-blue-400 hover:text-white transition">
+  <h3 class="text-xl font-semibold">Student Comments</h3>
+  <p class="text-gray-700">Total: {{ comments.students.length }}</p>
+  <p class="text-white-400 mt-8 hover:text-white">click to view</p>
+</div>
+
+<!-- Parent Comments Card -->
+<div @click="showComments('parents')" class="cursor-pointer bg-green-100 p-6 rounded-lg hover:bg-blue-400 hover:text-white transition">
+  <h3 class="text-xl font-semibold">Parent Comments</h3>
+  <p class="text-gray-700">Total: {{ comments.parents.length }}</p>
+  <p class="text-white-400 mt-8 hover:text-white">click to view</p>
+</div>
+
+<!-- Teacher Comments Card -->
+<div @click="showComments('teachers')" class="cursor-pointer bg-blue-100 p-6 rounded-lg shadow-md hover:bg-blue-400 hover:text-white transition">
+  <h3 class="text-xl font-semibold">Teacher Comments</h3>
+  <p class="text-gray-700">Total: {{ comments.teachers.length }}</p>
+  <p class="text-white-400 mt-8 hover:text-white">click to view</p>
+</div>
+
+
+
+
+
+<section v-if="selectedCommentType" class="">
+  <button @click="goBackToDashboard" class="mb-4 px-4 p-4 bg-gray-500 text-white rounded hover:bg-gray-700">
+    Comments Dashboard
+  </button>
+
+  <h2 class="text-2xl font-semibold mb-4 ">{{ selectedCommentType.charAt(0).toUpperCase() + selectedCommentType.slice(1) }} Comments</h2>
+
+  <div class="bg-white p-4 rounded-lg shadow-md w-5/6">
+    <ul>
+      <li v-for="comment in comments[selectedCommentType]" :key="comment.id" class="border-b py-3">
+        <p class="text-gray-900 font-semibold">{{ comment.name }} ({{ comment.email }})</p>
+        <p class="text-gray-700 italic">"{{ comment.text }}"</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+</main>
+</div>
+
+
 
       <section v-if="activePage === 'upload-portfolio'" class="p-8">
         <AdminportfolioUpload />
@@ -198,6 +247,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import AdminportfolioUpload from "./adminportfolioUpload.vue";
@@ -209,27 +259,32 @@ import router from "../router";
 
 export default {
   name: "AdminDashboard",
-  components: { AdminportfolioUpload, PortfolioView, Adminstudentregister,Adminparentregister,Adminteacherregister},
+  components: { 
+    AdminportfolioUpload, 
+    PortfolioView, 
+    Adminstudentregister,
+    Adminparentregister,
+    Adminteacherregister
+  },
   data() {
     return {
       activePage: "dashboard",
       manageUserTab: "students",
       students: [],
-      teachers: [
-        { _id: "t1", name: "Mr. Anderson", subject: "Mathematics" },
-        { _id: "t2", name: "Ms. Davis", subject: "History" },
-      ],
-      parents: [
-        { _id: "p1", name: "Mrs. Johnson", phone: "123-456-7890" },
-        { _id: "p2", name: "Mr. Smith", phone: "987-654-3210" },
-      ],
+      teachers: [],
+      parents: [],
       loadingStudents: false,
       loadingTeachers: false,
       loadingParents: false,
-      showAddStudentForm: false, // Toggle for adding student form
-      showAddTeacherForm: false, // Toggle for adding teacher form
-      showAddParentForm: false, // Toggle for adding parent form
-      showAddTeacherForm:false,
+      showAddStudentForm: false,
+      showAddTeacherForm: false,
+      showAddParentForm: false,
+      selectedCommentType: null, // Track selected comment category
+      comments: {
+        students: [],
+        parents: [],
+        teachers: [],
+      },
     };
   },
   computed: {
@@ -239,6 +294,7 @@ export default {
         case "manageUsers": return "Manage Users";
         case "upload-portfolio": return "Upload Portfolio";
         case "viewPortfolios": return "View Portfolios";
+        case "comments": return "Comments Section";
         default: return "";
       }
     },
@@ -257,15 +313,16 @@ export default {
         this.fetchParents();
       }
     },
-    fetchStudents() {
+    async fetchStudents() {
       this.loadingStudents = true;
-      axios
-        .get("http://localhost:8000/api/Users/GetStudents")
-        .then((response) => {
-          this.students = response.data.students;
-        })
-        .catch((error) => console.error("Error fetching students:", error))
-        .finally(() => (this.loadingStudents = false));
+      try {
+        const response = await axios.get("http://localhost:8000/api/Users/GetStudents");
+        this.students = response.data.students;
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      } finally {
+        this.loadingStudents = false;
+      }
     },
     fetchTeachers() {
       this.loadingTeachers = true;
@@ -288,11 +345,6 @@ export default {
     openAddParentForm() {
       this.showAddParentForm = true;
     },
-    // Update methods (similar for each section)
-    updateStudent(student) {},
-    updateTeacher(teacher) {},
-    updateParent(parent) {},
-    // Delete methods (similar for each section)
     async deleteStudent(id) {
       if (window.confirm("Are you sure you want to delete this student?")) {
         try {
@@ -308,26 +360,33 @@ export default {
         }
       }
     },
-    deleteTeacher(id) {},
-    deleteParent(id) {},
     async logout() {
-  try {
-    await axios.post("http://localhost:8000/api/Users/logout", {}, { withCredentials: true });
-
-    alert("Logout successful!");
-    
-    // Clear local storage
-    localStorage.removeItem("adminToken");
-
-    // Redirect to admin login page
-    this.$router.push({ name: "AdminLogin" });
-
-  } catch (error) {
-    alert("Logout failed: " + (error.response?.data?.message || error.message));
-  }
-},
+      try {
+        await axios.post("http://localhost:8000/api/Users/logout", {}, { withCredentials: true });
+        alert("Logout successful!");
+        localStorage.removeItem("adminToken");
+        this.$router.push({ name: "AdminLogin" });
+      } catch (error) {
+        alert("Logout failed: " + (error.response?.data?.message || error.message));
+      }
+    },
+    async fetchComments() {
+      try {
+        const response = await axios.get("http://localhost:8000/api/comments");
+        this.comments = response.data;
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    },
+    showComments(type) {
+      this.selectedCommentType = type;
+    },
+    goBackToCommentsDashboard() {
+      this.selectedCommentType = null;
+    },
+  },
+  created() {
+    this.fetchComments();
   },
 };
 </script>
-<style>
-</style>
