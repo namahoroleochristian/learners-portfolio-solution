@@ -18,7 +18,7 @@
 
 <template>
   <div class="flex flex-col min-h-screen w-full text-center bg-fixed bg-cover bg-center"
-    style="background-image: url('https://pfst.cf2.poecdn.net/base/image/0935f79852dea24c2fd6768a80c491e649f17294fd8005edbbef6672a8a536ee?w=1024&h=768&pmaid=289842107');">
+    style="background-image: url('/bg.png');">
     
     <header class="bg-blue-700 text-white py-4 px-6 text-xl font-semibold shadow-md">
       Student Digital Portfolio
@@ -35,6 +35,7 @@
         <RouterLink to="/studentlogin" class="px-6 py-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Student</RouterLink>
         <RouterLink to="/parentslogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Parent </RouterLink>
         <RouterLink to="/teacherlogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Teacher</RouterLink>
+        <RouterLink to="/adminlogin" class="px-6 py-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">other</RouterLink>
       </div>
     </main>
 

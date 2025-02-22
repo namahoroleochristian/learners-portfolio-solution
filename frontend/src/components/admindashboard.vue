@@ -149,9 +149,14 @@
         <div v-else-if="manageUserTab === 'parents'" class="p-4">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-semibold">Parents List</h3>
-            <button @click="openAddParentForm" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-400 transition">
-              Add New Parent
+           
+            <button @click="openAddparentForm"  class="bg-blue-500 text-white p-2 rounded hover:bg-blue-400 transition">
+           Add New Parent
             </button>
+          </div>
+          <!-- Conditionally Render UserRegister Component -->
+          <div v-if="showAddParentForm" class="mb-6 max-w-4/6 flex items-center justify-center mx-36 bg-white/80 backdrop-blur-lg p-4 rounded-xl shadow-md">
+            <Adminparentregister />
           </div>
 
           <div v-if="loadingParents" class="text-center p-8 bg-blue-400/40 backdrop-blur-md text-blue-900 text-2xl font-semibold hover:cursor-progress">Loading parents...</div>
@@ -190,16 +195,17 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import AdminportfolioUpload from "./adminportfolioUpload.vue";
 import PortfolioView from "./adminportfolioView.vue";
 import Adminstudentregister from "./Adminstudentregister.vue";
+import Adminparentregister from "./Adminparentregister.vue";
+import router from "../router";
 
 export default {
   name: "AdminDashboard",
-  components: { AdminportfolioUpload, PortfolioView, Adminstudentregister },
+  components: { AdminportfolioUpload, PortfolioView, Adminstudentregister,Adminparentregister},
   data() {
     return {
       activePage: "dashboard",
@@ -299,13 +305,24 @@ export default {
     },
     deleteTeacher(id) {},
     deleteParent(id) {},
-    logout() {
-      // Handle logout
-    },
+    async logout() {
+  try {
+    await axios.post("http://localhost:8000/api/Users/logout", {}, { withCredentials: true });
+
+    alert("Logout successful!");
+    
+    // Clear local storage
+    localStorage.removeItem("adminToken");
+
+    // Redirect to admin login page
+    this.$router.push({ name: "AdminLogin" });
+
+  } catch (error) {
+    alert("Logout failed: " + (error.response?.data?.message || error.message));
+  }
+},
   },
 };
 </script>
-
-<style scoped>
-/* Styles here */
+<style>
 </style>

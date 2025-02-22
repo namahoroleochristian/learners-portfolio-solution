@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../components/studentlogin.vue';
 
 import register from '../components/studentregister.vue';
+import adminlogin from '../components/adminlogin.vue';
 
 import parentslogin from '../components/parentslogin.vue';
 import teacherlogin from '../components/teacherlogin.vue';
@@ -54,6 +55,11 @@ component:Studentregister,
    name:'teacherlogin',
    component:teacherlogin,
   },
+  {
+    path:'/adminlogin',
+    name:'adminlogin',
+    component:adminlogin,
+   },
  
   {
     path: '/Upload',
