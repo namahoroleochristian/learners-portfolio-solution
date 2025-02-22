@@ -185,24 +185,78 @@ export const checkAuth = async (req, res) => {
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
-// export const DeleteUsers = async (req, res) => {
-//       const { id } = req.params;
-//       if (!mongoose.Types.ObjectId.isValid(id)) {
-//       return  res
-//           .status(404)
-//           .json({ success: false, message: "Nigga give me a valid URL Id" });
-//       }
-//       try {
-//         const result = await userModel.findByIdAndDelete(id);
-    
-//         res.status(200).send({
-//           success: true,
-//           message: "Data deleted",
-//         });
-//       } catch (error) {
-//         res.status(404).json({
-//           success: false,
-//           message: `object with id ${id} not found`,
-//         });
-//       }
-//     }
+
+
+// Update a student
+export const updateStudent = async (req, res) => {
+  const { id } = req.params; // student id from URL parameters
+  const updates = req.body;   // fields to update
+
+  try {
+    // If password is provided, hash it before updating
+    if (updates.password) {
+      updates.password = await bcryptjs.hash(updates.password, 10);
+    }
+
+    const updatedStudent = await Student.findByIdAndUpdate(id, updates, {
+      new: true, // return the updated document
+      runValidators: true,
+    });
+
+    if (!updatedStudent) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Student updated successfully",
+      student: {
+        ...updatedStudent._doc,
+        password: undefined,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// Delete a student
+export const deleteStudent = async (req, res) => {
+  const { id } = req.params; // student id from URL parameters
+
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(id);
+
+    if (!deletedStudent) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Student deleted successfully",
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// Retrieve all students
+export const getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.find().select("-password");
+
+    res.status(200).json({
+      success: true,
+      count: students.length,
+      students,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};

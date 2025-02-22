@@ -8,7 +8,7 @@
     <!-- Main Content -->
     <main class="flex-grow p-6 flex justify-center">
       <div class="bg-white/60 backdrop-blur-2xl  shadow-lg rounded-lg p-6 w-3/4 px-12">
-        <h2 class="text-2xl font-semibold text-blue-800 text-center border-b border-gray-300 py-4">My Portfolio</h2>
+        <h2 class="text-2xl font-semibold text-blue-800 text-center border-b border-gray-300 py-4">Portfolios</h2>
         <ul class="mt-4 w-full">
           <li v-for="portfolio in portfolios" :key="portfolio.id" class="border-b border-gray-300 py-4 flex justify-between items-center">
             <span class="text-gray-700 font-semibold ">{{ portfolio.name }}</span>

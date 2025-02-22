@@ -80,6 +80,15 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 app.use('/api/portfolio', router);
 app.get('/list', getPortfolios);
 
+//cors 
+// import cors from "cors";
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Replace with your frontend URL
+//      // Allow cookies if using session-based auth
+//   })
+// );
+
 
 // Start the server
 app.listen(PORT, () => {

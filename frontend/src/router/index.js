@@ -15,7 +15,7 @@ import teacherdashboard from '../components/teacherdashboard.vue';
 // import Home from '../views/Home.vue';
 import HomePage from '../components/HomePage.vue';
 import FileUpload from '../components/fileUpload.vue';
-import PortfolioView from '../components/portfolioView.vue';
+import PortfolioView from '../components/adminportfolioView.vue';
 
 import Studentregister from '../components/studentregister.vue';
 import Admindashboard from '../components/admindashboard.vue';
