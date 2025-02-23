@@ -146,7 +146,7 @@
         </div>
 
         <!-- Manage Users Sub-section: Parents -->
-        <div v-else-if="manageUserTab === 'parents'" class="p-4">
+        <div v-else-if="manageUserTab === 'parents'" class="p-4 bg-white/60 rounded-2xl backdrop-blur-md">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-semibold">Parents List</h3>
            

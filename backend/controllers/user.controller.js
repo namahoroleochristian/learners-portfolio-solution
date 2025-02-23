@@ -4,6 +4,7 @@ import User from '../models/user.model.js'
 import bcryptjs from 'bcryptjs'
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 import Student from '../models/student.model.js';
+import Parent from '../models/parent.model.js';
 
 export const signup = async (req, res) => {
 	const { email, password, name,role } = req.body;
@@ -100,7 +101,56 @@ export const studentregistration = async (req, res) => {
 };
 
 
-export const login = async (req, res) => {
+export const parentregister = async (req, res) => {
+	const { email, password, name } = req.body;
+
+	try {
+		if (!email || !password || !name ) {
+			throw new Error("All fields are required");
+		}
+
+		const userAlreadyExists = await Parent.findOne({ email });
+		console.log("userAlreadyExists", userAlreadyExists);
+
+		if (userAlreadyExists) {
+			return res.status(400).json({ success: false, message: "User already exists" });
+		}
+
+		const hashedPassword = await bcryptjs.hash(password, 10);
+		const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+		const parent = new Parent({
+			email,
+			password: hashedPassword,
+			name,
+			role:'parent',
+			verificationToken,
+			verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+		});
+
+		await parent.save();
+
+		// jwt
+		generateTokenAndSetCookie(res, parent._id);
+
+		// await sendVerificationEmail(user.email, verificationToken);
+
+		res.status(201).json({
+			success: true,
+			message: "User created successfully",
+			user: {
+				...parent._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+
+
+export const parentlogin = async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		const user = await User.findOne({email});
@@ -130,10 +180,28 @@ export const login = async (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.log("Error in login ", error);
+		console.log("Error in parent ", error);
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
+
+
+export const getAllParents = async (req, res) => {
+	try {
+	  const parents = await Parent.find().select("-password");
+  
+	  res.status(200).json({
+		success: true,
+		count: parents.length,
+		parents,
+	  });
+	} catch (error) {
+	  res.status(400).json({ success: false, message: error.message });
+	}
+  };
+  
+
+
 export const studentlogin = async (req, res) => {
 	const { email, password } = req.body;
 	try {
@@ -168,11 +236,32 @@ export const studentlogin = async (req, res) => {
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
+export const deleteParent = async (req, res) => {
+	const { id } = req.params; // student id from URL parameters
+  
+	try {
+	  const deletedParent = await Parent.findByIdAndDelete(id);
+  
+	  if (!deletedParent) {
+		return res.status(404).json({
+		  success: false,
+		  message: "Parent not found",
+		});
+	  }
+  
+	  res.status(200).json({
+		success: true,
+		message: "Parent deleted successfully",
+	  });
+	} catch (error) {
+	  res.status(400).json({ success: false, message: error.message });
+	}
+  };
+  
 export const logout = async (req, res) => {
 	res.clearCookie("token");
 	res.status(200).json({ success: true, message: "Logged out successfully" });
 };
-
 export const checkAuth = async (req, res) => {
 	try {
 		const user = await User.findById(req.userId).select("-password");
