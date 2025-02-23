@@ -15,7 +15,7 @@ const login = () => {
 <template>
   <div class="flex items-center justify-center min-h-screen bg-cover bg-center" 
        style="background-image: url('/bg.png');">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div class=" bg-white/40 backdrop-blur-md hover:backdrop-blur-xl duration-300 cursor-pointer max-w-4/6 max-h-100  items-center justify-self-center p-8 rounded-lg shadow-lg w-96">
       <RouterLink to="/" class=""><ArrowLeftIcon class="w-6 h-6 text-gray-700" /></RouterLink>
       <h2 class="text-2xl font-semibold text-center mb-6">Parent Log in</h2>
       <form @submit.prevent="login" class="space-y-4">
@@ -23,14 +23,14 @@ const login = () => {
           type="email" 
           v-model="email" 
           placeholder="Enter your email" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <input 
           type="password" 
           v-model="password" 
           placeholder="Password" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <button 
@@ -42,11 +42,11 @@ const login = () => {
           <a href="#" class="text-blue-600 text-sm hover:underline">Forgot your password?</a>
         </div>
         <div class="text-center">
-          <a href="#" class="text-blue-600 text-sm hover:underline">
+          <!-- <a href="#" class="text-blue-600 text-sm hover:underline">
            <RouterLink to="/parentregister">
             New? Create your account here!
           </RouterLink>
-          </a>
+          </a> -->
         </div>
       </form>
     </div>

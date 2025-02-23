@@ -19,8 +19,8 @@ const login = () => {
 
 <template>
   <div class="flex items-center justify-center min-h-screen bg-cover bg-center" 
-       style="background-image: url('https://pfst.cf2.poecdn.net/base/image/0935f79852dea24c2fd6768a80c491e649f17294fd8005edbbef6672a8a536ee?w=1024&h=768&pmaid=289842107');">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+       style="background-image: url('/bg.png');">
+    <div class="bg-white/40 backdrop-blur-md hover:backdrop-blur-xl duration-300 cursor-pointer p-8 rounded-lg shadow-lg w-96">
       <button @click="goBack" class=" hover:cursor-pointer ">
         <ArrowLeftIcon class="w-6 h-6 text-gray-700 hover:text-blue-700 " />
       </button>
@@ -30,14 +30,14 @@ const login = () => {
           type="email" 
           v-model="email" 
           placeholder="Email" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <input 
           type="password" 
           v-model="password" 
           placeholder="Password" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <button 

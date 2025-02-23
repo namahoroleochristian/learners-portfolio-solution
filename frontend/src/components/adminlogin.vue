@@ -28,7 +28,7 @@ const login = () => {
 <template>
   <div class="flex items-center justify-center min-h-screen bg-cover bg-center" 
        style="background-image: url('/bg.png');">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div class="bg-white/40 backdrop-blur-md hover:backdrop-blur-xl duration-300 cursor-pointer p-8 rounded-lg shadow-lg w-96">
       <button @click="goBack" class=" hover:cursor-pointer ">
         <ArrowLeftIcon class="w-6 h-6 text-gray-700 hover:text-blue-700 " />
       </button>
@@ -38,14 +38,14 @@ const login = () => {
           type="email" 
           v-model="email" 
           placeholder="Email" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <input 
           type="password" 
           v-model="password" 
           placeholder="Password" 
-          class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500" 
+          class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
         <p v-if="errorMessage" class="text-red-500 text-center">{{ errorMessage }}</p>
