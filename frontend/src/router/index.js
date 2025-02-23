@@ -14,6 +14,7 @@ import parentdashboard from '../components/parentdashboard.vue';
 import admindashboard from '../components/admindashboard.vue';
 import teacherdashboard from '../components/teacherdashboard.vue';
 import Adminparentregister from '../components/Adminparentregister.vue';
+import Adminteacherregister from '../components/Adminteacherregister.vue';
 
 // import Home from '../views/Home.vue';
 import HomePage from '../components/HomePage.vue';
@@ -98,6 +99,11 @@ component:teacherdashboard
     path:'/Adminparentregister',
     name:'Adminparentregister',
     component:Adminparentregister,
+  },
+  {
+    path:'/Adminteacherregister',
+    name:'Adminteacherregister',
+    component:Adminteacherregister,
   }
 
 ];
