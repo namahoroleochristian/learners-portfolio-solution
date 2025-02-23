@@ -24,7 +24,7 @@
       Student Digital Portfolio
     </header>
 
-    <main class="flex flex-col bg-white/40 backdrop-blur-md max-w-4/6 max-h-100  items-center justify-self-center my-16 rounded-md flex-grow p-6">
+    <main class="flex flex-col bg-white/40 backdrop-blur-md hover:backdrop-blur-xl duration-300 cursor-pointer max-w-4/6 max-h-100  items-center justify-self-center my-16 rounded-md flex-grow p-6">
       
       <h1 class="text-4xl font-bold text-blue-700">Welcome to Student Digital Portfolio</h1>
       <h4 class="text-black-400 mt-10">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo illum reiciendis dolores 
