@@ -17,14 +17,14 @@
 </template> -->
 
 <template>
-  <div class="flex flex-col min-h-screen w-full text-center bg-fixed bg-cover bg-center"
+  <div class="flex flex-col items-center min-h-screen w-full text-center  bg-fixed bg-cover bg-center"
     style="background-image: url('/bg.png');">
     
-    <header class="bg-blue-700 text-white py-4 px-6 text-xl font-semibold shadow-md">
+    <header class="bg-blue-700 text-white py-4 px-6 text-xl font-semibold min-w-full shadow-md">
       Student Digital Portfolio
     </header>
 
-    <main class="flex flex-col items-center justify-center flex-grow p-6">
+    <main class="flex flex-col bg-white/40 backdrop-blur-md max-w-4/6 max-h-100  items-center justify-self-center my-16 rounded-md flex-grow p-6">
       
       <h1 class="text-4xl font-bold text-blue-700">Welcome to Student Digital Portfolio</h1>
       <h4 class="text-black-400 mt-10">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo illum reiciendis dolores 
@@ -39,7 +39,7 @@
       </div>
     </main>
 
-    <footer class="bg-gray-900 text-white py-0.2 text-center text-sm mt-auto text-ml">
+    <footer class="bg-gray-900/20 backdrop-blur-md text-white py-0.2 text-center text-xl mt-auto py-5 min-w-full  ">
       &copy; 2025 STUDENT DIGITAL PORTFOLIO . All rights reserved.
     </footer>
   </div>
