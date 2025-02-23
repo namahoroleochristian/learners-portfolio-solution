@@ -5,6 +5,7 @@ import bcryptjs from 'bcryptjs'
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 import Student from '../models/student.model.js';
 import Parent from '../models/parent.model.js';
+import Teacher from '../models/Teacher.model.js';
 
 export const signup = async (req, res) => {
 	const { email, password, name,role } = req.body;
@@ -350,3 +351,135 @@ export const getAllStudents = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+
+
+
+
+
+
+//// ------------------- TEACHER -------------------------------/////
+
+export const teacherRegister = async (req, res) => {
+	const { email, password, name } = req.body;
+
+	try {
+		if (!email || !password || !name ) {
+			throw new Error("All fields are required");
+		}
+
+		const userAlreadyExists = await Teacher.findOne({ email });
+		console.log("userAlreadyExists", userAlreadyExists);
+
+		if (userAlreadyExists) {
+			return res.status(400).json({ success: false, message: "User already exists" });
+		}
+
+		const hashedPassword = await bcryptjs.hash(password, 10);
+		const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+		const teacher = new Teacher({
+			email,
+			password: hashedPassword,
+			name,
+			role:'parent',
+			verificationToken,
+			verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+		});
+
+		await teacher.save();
+
+		// jwt
+		generateTokenAndSetCookie(res, parent._id);
+
+		// await sendVerificationEmail(user.email, verificationToken);
+
+		res.status(201).json({
+			success: true,
+			message: "User created successfully",
+			user: {
+				...teacher._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+
+
+export const teacherlogin = async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		const teacher = await Teacher.findOne({email});
+    
+    
+		if (!teacher) {
+			return res.status(400).json({ success: false, message: "Invalid credentials" });
+		}
+    
+    
+		const isPasswordValid = await bcryptjs.compare(password, teacher.password);
+		if (!isPasswordValid) {
+			return res.status(400).json({ success: false, message: "Invalid credentials" });
+		}
+
+		generateTokenAndSetCookie(res, teacher._id);
+
+		teacher.lastLogin = new Date();
+		await teacher.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Logged in successfully",
+			teacher: {
+				...teacher._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		console.log("Error in parent ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+
+export const getAllTeacher = async (req, res) => {
+	try {
+	  const teachers = await Teacher.find().select("-password");
+  
+	  res.status(200).json({
+		success: true,
+		count: teachers.length,
+		teachers,
+	  });
+	} catch (error) {
+	  res.status(400).json({ success: false, message: error.message });
+	}
+  };
+  
+  export const deleteteacher = async (req, res) => {
+	const { id } = req.params; // student id from URL parameters
+  
+	try {
+	  const deletedTeacher = await Teacher.findByIdAndDelete(id);
+  
+	  if (!deletedTeacher) {
+		return res.status(404).json({
+		  success: false,
+		  message: "Teacher not found",
+		});
+	  }
+  
+	  res.status(200).json({
+		success: true,
+		message: "Teacher deleted successfully",
+	  });
+	} catch (error) {
+	  res.status(400).json({ success: false, message: error.message });
+	}
+  };
+  
+
+
+//// ------------------- TEACHER -------------------------------/////

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth, getAllStudents, logout, signup, studentlogin, studentregistration, deleteStudent, parentlogin, parentregister, getAllParents, deleteParent } from "../controllers/user.controller.js";
+import { checkAuth, getAllStudents, logout, signup, studentlogin, studentregistration, deleteStudent, parentlogin, parentregister, getAllParents, deleteParent, teacherlogin, teacherRegister, getAllTeacher, deleteteacher } from "../controllers/user.controller.js";
 const user_router = Router()
  user_router.post('/signup',signup) 
  
@@ -18,6 +18,16 @@ const user_router = Router()
 
 
 //----------parent-------\\
+
+
+
+
+//---------- TEACER -------\\
+user_router.post('/teacherlogin',teacherlogin);
+user_router.post('/teacherregister',teacherRegister) 
+user_router.get('/getteachers',getAllTeacher) 
+user_router.get('/deleteteacher/:id',deleteteacher) 
+//---------- TEACER -------\\
 
 
 

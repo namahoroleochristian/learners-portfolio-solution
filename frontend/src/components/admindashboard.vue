@@ -125,9 +125,9 @@
               Add New Teacher
             </button>
           </div>
-          <section v-if="showAddTeacherForm" class="p-8">
-        <Adminteacherregister />
-      </section>
+          <div v-if="showAddTeacherForm" class="mb-6 max-w-4/6 flex items-center justify-center mx-36 bg-white/80 backdrop-blur-lg p-4 rounded-xl shadow-md">
+            <Adminteacherregister />
+          </div>
 
           <div v-if="loadingTeachers" class="text-center p-8 bg-blue-400/40 backdrop-blur-md text-blue-900 text-2xl font-semibold hover:cursor-progress">Loading teachers...</div>
 
@@ -135,14 +135,22 @@
             <li v-for="(teacher, index) in teachers" :key="teacher._id || index" class="border-b py-2 flex justify-between items-center w-full p-4">
               <div>
                 <p class="text-lg font-medium text-gray-800 break-all">{{ teacher.name }}</p>
-                <p class="text-sm text-gray-500">Subject: {{ teacher.subject }}</p>
+                <!-- <p class="text-sm text-gray-500">Subject: {{ teacher.subject }}</p> -->
               </div>
               <div class="flex items-center space-x-4">
                 <button @click="updateTeacher(teacher)" class="text-amber-500 hover:text-amber-600 p-2 rounded transition duration-300">
-                  <!-- Edit Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+              </svg>
                 </button>
-                <button @click="deleteTeacher(teacher._id)" class="text-red-500 hover:text-red-600 p-2 rounded transition duration-300">
-                  <!-- Delete Icon -->
+                <button @click="deleteTeacher(teacher._id)" class="text-red-500 hover:text-red-600  p-2 rounded transition duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+              </svg>
                 </button>
               </div>
             </li>
@@ -150,7 +158,7 @@
         </div>
 
         <!-- Manage Users Sub-section: Parents -->
-        <div v-else-if="manageUserTab === 'parents'" class="p-4 bg-white/60 rounded-2xl backdrop-blur-md">
+        <div v-else-if="manageUserTab === 'parents'" class="p-4 bg-white/60 backdrop-blur-xl rounded-md">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-2xl font-semibold">Parents List</h3>
            
@@ -165,18 +173,22 @@
 
           <div v-if="loadingParents" class="text-center p-8 bg-blue-400/40 backdrop-blur-md text-blue-900 text-2xl font-semibold hover:cursor-progress">Loading parents...</div>
 
-          <ul v-else class="shadow-md rounded-md bg-white/60 backdrop-blur-2xl overflow-x-hidden border-b border-gray-300 pt-2 flex flex-col sm:flex-col sm:items-center justify-between gap-2 p-6">
+          <ul v-else class="shadow-md rounded-md bg-white/5 backdrop-blur-xs overflow-x-hidden border-b border-gray-300 pt-2 flex flex-col sm:flex-col sm:items-center justify-between gap-2 p-6">
             <li v-for="(parent, index) in parents" :key="parent._id || index" class="border-b py-2 flex justify-between items-center w-full p-4">
               <div>
                 <p class="text-lg font-medium text-gray-800 break-all">{{ parent.name }}</p>
-                <p class="text-sm text-gray-500">Phone: {{ parent.phone }}</p>
+                <!-- <p class="text-sm text-gray-500">Phone: {{ parent.phone }}</p> -->
               </div>
               <div class="flex items-center space-x-4">
                 <button @click="updateParent(parent)" class="text-amber-500 hover:text-amber-600 p-2 rounded transition duration-300">
                   <!-- Edit Icon -->
                 </button>
                 <button @click="deleteParent(parent._id)" class="text-red-500 hover:text-red-600 p-2 rounded transition duration-300">
-                  <!-- Delete Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+              </svg>
                 </button>
               </div>
             </li>
@@ -255,7 +267,7 @@ import PortfolioView from "./adminportfolioView.vue";
 import Adminstudentregister from "./Adminstudentregister.vue";
 import Adminparentregister from "./Adminparentregister.vue";
 import Adminteacherregister from "./Adminteacherregister.vue";
-import router from "../router";
+
 
 export default {
   name: "AdminDashboard",
@@ -273,6 +285,12 @@ export default {
       students: [],
       teachers: [],
       parents: [],
+      teachers: [
+     
+      ],
+      parents: [
+        
+      ],
       loadingStudents: false,
       loadingTeachers: false,
       loadingParents: false,
@@ -326,15 +344,37 @@ export default {
     },
     fetchTeachers() {
       this.loadingTeachers = true;
-      setTimeout(() => {
-        this.loadingTeachers = false;
-      }, 1000);
+      axios
+        .get("http://localhost:8000/api/Users/getteachers")
+        .then((response) => {
+          this. teachers = response.data.teachers;
+          console.log(response.data.teachers);
+          
+        })
+        .catch((error) => console.error("Error fetching students:", error))
+        .finally(() => (this.loadingStudents = false));
+    },
+    fetchTeachers() {
+      this.loadingTeachers = true;
+      axios
+        .get("http://localhost:8000/api/Users/getteachers")
+        .then((response) => {
+          this. teachers = response.data.teachers;
+          console.log(response.data.teachers);
+          
+        })
+        .catch((error) => console.error("Error fetching students:", error))
+        .finally(() => (this.loadingTeachers = false));
     },
     fetchParents() {
-      this.loadingParents = true;
-      setTimeout(() => {
-        this.loadingParents = false;
-      }, 1000);
+     this.loadingParents = true;
+      axios
+        .get("http://localhost:8000/api/Users/getparents")
+        .then((response) => {
+          this.parents = response.data.parents;
+        })
+        .catch((error) => console.error("Error fetching students:", error))
+        .finally(() => (this.loadingParents = false));
     },
     openAddStudentForm() {
       this.showAddStudentForm = true;
@@ -360,6 +400,8 @@ export default {
         }
       }
     },
+    deleteTeacher(id) {},
+    deleteParent(id) {},
     async logout() {
       try {
         await axios.post("http://localhost:8000/api/Users/logout", {}, { withCredentials: true });
