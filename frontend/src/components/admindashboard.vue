@@ -303,6 +303,12 @@ export default {
         parents: [],
         teachers: [],
       },
+      // Fields for adding a new comment
+      commentName: "",
+      commentEmail: "",
+      commentText: "",
+      selectedUserType: "", // should be one of 'students', 'parents', or 'teachers'
+   
     };
   },
   computed: {
@@ -400,8 +406,37 @@ export default {
         }
       }
     },
-    deleteTeacher(id) {},
-    deleteParent(id) {},
+    async deleteParent (id) {
+      if (window.confirm("Are you sure you want to delete this student?")) {
+        try {
+          const response = await axios.delete(`http://localhost:8000/api/Users/deleteparent/${id}`);
+          if (response.data.success) {
+            this.parents = this.parents.filter(parent => parent._id !== id);
+            alert("Parent deleted successfully!");
+          } else {
+            alert("Error deleting Parent: " + response.data.message);
+          }
+        } catch (error) {
+          alert("Error deleting Parent: " + error.message);
+        }
+      }
+    },
+    async deleteTeacher(id) {
+      if (window.confirm("Are you sure you want to delete this teacher?")) {
+        try {
+          const response = await axios.delete(`http://localhost:8000/api/Users/deleteteacher/${id}`);
+          if (response.data.success) {
+            this.teachers = this.teachers.filter(teacher => teacher._id !== id);
+
+            alert("Teacher deleted successfully!");
+          } else {
+            alert("Error deleting teacher: " + response.data.message);
+          }
+        } catch (error) {
+          alert("Error deleting teacher: " + error.message);
+        }
+      }
+    },
     async logout() {
       try {
         await axios.post("http://localhost:8000/api/Users/logout", {}, { withCredentials: true });
@@ -414,21 +449,39 @@ export default {
     },
     async fetchComments() {
       try {
-        const response = await axios.get("http://localhost:8000/api/comments");
+        const response = await axios.get("http://localhost:8000/api/Users/getccomments");
+        // Assuming the API returns an object with keys for each userType:
         this.comments = response.data;
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
     },
-    showComments(type) {
+    // This method both shows comments and, if needed, adds a comment.
+    async showComments(type) {
+      // Set which type of comments to show.
       this.selectedCommentType = type;
+      // If you intend to add a comment when clicking, do it here.
+      // If not, remove the POST request below.
+      try {
+        // POST a new comment:
+        await axios.post("http://localhost:8000/api/comments", {
+          name: this.commentName,
+          email: this.commentEmail,
+          text: this.commentText,
+          userType: this.selectedUserType
+        });
+        // After adding the comment, refresh the comments list.
+        await this.fetchComments();
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
     },
     goBackToCommentsDashboard() {
       this.selectedCommentType = null;
-    },
+    }
   },
   created() {
     this.fetchComments();
-  },
+  }
 };
 </script>

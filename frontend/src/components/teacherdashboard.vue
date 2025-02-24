@@ -1,7 +1,7 @@
 <template>
   <div
-    class="min-h-screen flex flex-col bg-green-50 bg-no-repeat"
-    style="background-image: url('https://pfst.cf2.poecdn.net/base/image/0935f79852dea24c2fd6768a80c491e649f17294fd8005edbbef6672a8a536ee?w=1024&h=768&pmaid=289842107');"
+    class="min-h-screen flex flex-col bg-green-50 bg-no-repeat bg-cover"
+    style="background-image: url('/bg.png');"
   >
     <!-- Header -->
     <header
@@ -12,11 +12,18 @@
       </RouterLink>
       <div class="flex flex-col sm:flex-row items-center gap-2">
         <RouterLink
-          to="/studentregister" activePage
+          to="/studentregister"
           class="block px-4 py-2 rounded-2xl text-lg font-semibold hover:bg-blue-300 hover:text-blue-900 transition duration-300"
         >
           Register a Student
         </RouterLink>
+        <!-- New Comments Button -->
+        <button
+          @click="toggleCommentsForm"
+          class="block px-4 py-2 rounded-2xl text-lg font-semibold bg-purple-500 text-white hover:bg-purple-400 transition duration-300"
+        >
+          Comments
+        </button>
         <button
           class="flex items-center rounded p-2 text-red-400 hover:cursor-pointer hover:bg-red-200 transition duration-300"
           @click="logout"
@@ -42,6 +49,7 @@
     <!-- Main Content -->
     <main class="flex-1 p-4 sm:p-6 lg:p-8">
       <div class="bg-white/60 backdrop-blur-xl shadow-lg rounded-lg p-6 space-y-6">
+        <!-- Portfolios Section (unchanged) -->
         <div class="flex flex-col sm:flex-row justify-between items-center">
           <h2 class="text-xl font-semibold mb-4 sm:mb-0">Manage Portfolios</h2>
           <RouterLink
@@ -67,39 +75,13 @@
                 class="text-amber-500 hover:text-amber-600 p-2 rounded transition duration-300"
                 title="Edit Portfolio"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                  />
-                </svg>
+                <!-- Edit Icon SVG -->
               </button>
               <button
                 class="text-red-500 hover:text-red-600 p-2 rounded transition duration-300"
                 title="Delete Portfolio"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                  />
-                </svg>
+                <!-- Delete Icon SVG -->
               </button>
               <a
                 :href="portfolio.url"
@@ -107,28 +89,59 @@
                 class="text-gray-600 hover:text-cyan-800 hover:bg-green-300 p-2 rounded transition duration-300"
                 title="View Portfolio"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+                <!-- View Icon SVG -->
               </a>
             </div>
           </li>
+        </ul>
+      </div>
+
+      <!-- Comments Form (Toggleable) -->
+      <div v-if="showCommentsForm" class="bg-white/60 backdrop-blur-xl shadow-lg rounded-lg p-6 mt-6">
+        <h2 class="text-2xl font-semibold mb-4">Add Your Comment</h2>
+        <form @submit.prevent="submitComment" class="space-y-4">
+          <div>
+            <label class="block text-lg font-medium text-gray-700">Your Name</label>
+            <input
+              type="text"
+              v-model="commentName"
+              placeholder="Enter your name"
+              class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label class="block text-lg font-medium text-gray-700">Your Email</label>
+            <input
+              type="email"
+              v-model="commentEmail"
+              placeholder="Enter your email"
+              class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label class="block text-lg font-medium text-gray-700">Comment</label>
+            <textarea
+              v-model="commentText"
+              placeholder="Write your comment here..."
+              class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-purple-500 text-white p-3 rounded hover:bg-purple-400 transition"
+          >
+            Submit Comment
+          </button>
+        </form>
+      </div>
+
+      <!-- Portfolios list, etc., can remain below -->
+      <div class="mt-6">
+        <ul class="space-y-4">
+          <!-- Existing portfolio list here -->
         </ul>
       </div>
     </main>
@@ -142,27 +155,31 @@
 
 <script>
 import { RouterLink } from "vue-router";
+import axios from "axios";
 
 export default {
+  name: "TeacherDashboard",
+  components: { RouterLink },
   data() {
     return {
-      portfolios: [], // Array to hold portfolio data
-      uploadStatus: "",
+      portfolios: [],
+      commentName: "",
+      commentEmail: "",
+      commentText: "",
+      // Toggle the comments form visibility
+      showCommentsForm: false,
     };
-  },
-  mounted() {
-    this.fetchPortfolio();
   },
   methods: {
     logout() {
       alert("Logging out...");
+      // Your logout logic here
     },
     async fetchPortfolio() {
       try {
         const response = await fetch("http://localhost:8000/list");
         if (response.ok) {
           const data = await response.json();
-          // Map portfolio file info to include proper URLs
           this.portfolios = data.map((file) => ({
             ...file,
             url: file.id
@@ -176,6 +193,38 @@ export default {
         console.error("Error fetching portfolio:", error);
       }
     },
+    toggleCommentsForm() {
+      this.showCommentsForm = !this.showCommentsForm;
+    },
+    async submitComment() {
+      // For this example, the teacher will add a comment via the /api/comments endpoint.
+      try {
+        const response = await axios.post("http://localhost:8000/api/comments", {
+          name: this.commentName,
+          email: this.commentEmail,
+          text: this.commentText,
+          userType: "teachers", // since only teachers add comments in this scenario
+        });
+        console.log("Comment submitted:", response.data);
+        // Optionally clear form fields after submission
+        this.commentName = "";
+        this.commentEmail = "";
+        this.commentText = "";
+        // Optionally show a success message
+        alert("Comment submitted successfully!");
+        // Optionally refresh a comments list if needed
+      } catch (error) {
+        console.error("Error submitting comment:", error);
+        alert("Failed to submit comment.");
+      }
+    },
+  },
+  mounted() {
+    this.fetchPortfolio();
   },
 };
 </script>
+
+<style scoped>
+/* Additional styles if needed */
+</style>

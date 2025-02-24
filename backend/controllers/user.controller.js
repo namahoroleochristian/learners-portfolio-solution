@@ -6,6 +6,7 @@ import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js
 import Student from '../models/student.model.js';
 import Parent from '../models/parent.model.js';
 import Teacher from '../models/Teacher.model.js';
+import Admin from '../models/admin.model.js';
 
 export const signup = async (req, res) => {
 	const { email, password, name,role } = req.body;
@@ -483,3 +484,137 @@ export const getAllTeacher = async (req, res) => {
 
 
 //// ------------------- TEACHER -------------------------------/////
+//// ------------------- ADMIN -------------------------------/////
+
+export const adminlogin = async (req, res) => {
+	const { codename, password } = req.body;
+	try {
+		const admin = await Admin.findOne({codename});
+    
+    
+		if (!admin) {
+			return res.status(400).json({ success: false, message: "Invalid credentials consider Logging in using teacher or student portals or parent according to who you are" });
+		}
+    
+    
+		const isPasswordValid = await bcryptjs.compare(password, admin.password);
+		if (!isPasswordValid) {
+			return res.status(400).json({ success: false, message: "Invalid credentials" });
+		}
+
+		generateTokenAndSetCookie(res, admin._id);
+
+		admin.lastLogin = new Date();
+		await admin.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Logged in successfully",
+			user: {
+				...admin._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		console.log("Error in parent ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+export const adminDefine = async (req, res) => {
+	const { codename, password } = req.body;
+
+	try {
+		if (!codename || !password  ) {
+			throw new Error("All fields are required");
+		}
+
+		const userAlreadyExists = await Admin.findOne({ codename });
+		console.log("userAlreadyExists", userAlreadyExists);
+
+		if (userAlreadyExists) {
+			return res.status(400).json({ success: false, message: "User already exists" });
+		}
+
+		const hashedPassword = await bcryptjs.hash(password, 10);
+		const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+		const admin = new Admin({
+			codename,
+			password: hashedPassword,
+			role:'admin',
+			verificationToken,
+			verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+		});
+
+		await admin.save();
+
+		// jwt
+		generateTokenAndSetCookie(res, admin._id);
+
+		// await sendVerificationEmail(user.email, verificationToken);
+
+		res.status(201).json({
+			success: true,
+			message: "User created successfully",
+			user: {
+				...admin._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+//// ------------------- ADMIN -------------------------------/////
+
+
+
+
+//// ------------------- COMMENTS  -------------------------------/////
+
+import Comment from "../models/comments.model.js";
+
+// Get all comments grouped by userType
+export const getAllComments = async (req, res) => {
+  try {
+    const students = await Comment.find({ userType: "students" });
+    const parents = await Comment.find({ userType: "parents" });
+    const teachers = await Comment.find({ userType: "teachers" });
+
+    res.json({ students, parents, teachers });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch comments" });
+  }
+};
+
+// Add a new comment
+export const createComment = async (req, res) => {
+  try {
+    const { name, email, text, userType } = req.body;
+    
+    if (!name || !email || !text || !userType) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const newComment = new Comment({ name, email, text, userType });
+    await newComment.save();
+
+    res.status(201).json({ message: "Comment added successfully", newComment });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add comment" });
+  }
+};
+
+// Delete a comment by ID
+export const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Comment.findByIdAndDelete(id);
+    res.json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete comment" });
+  }
+};
+
+//// ------------------- COMMENTS  -------------------------------/////

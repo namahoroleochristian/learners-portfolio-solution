@@ -41,8 +41,8 @@ const registerParent = async () => {
 </script>
 
 <template>
-  <form @submit.prevent="registerParent" class="min-w-full space-y-2">
-    <div class="p-6">
+  <form @submit.prevent="registerParent" class="min-w-full ">
+    <div class="">
       <h2 class="text-2xl font-semibold text-center mb-6">Parent Registration</h2>
 
       <div>

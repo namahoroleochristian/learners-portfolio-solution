@@ -3,24 +3,39 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/solid';
 import { ref } from "vue";
 import router from '../router';
 
-const email = ref("");
+const codename = ref("");
 const password = ref("");
 const errorMessage = ref("");
 
-const defaultAdmin = {
-  email: "admin@gmail.com",
-  password: "admin123"
-};
+
 
 const goBack = () => {
   router.back()
 }
 
-const login = () => {
-  if (email.value === defaultAdmin.email && password.value === defaultAdmin.password) {
-    router.push({ name: 'admindashboard' });
-  } else {
-    errorMessage.value = "Invalid email or password. Please try again.";
+const login = async () => {
+  errorMessage.value = "";
+  try {
+    const response = await fetch("http://localhost:8000/api/Users/ReservedLogin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        codename: codename.value,
+        password: password.value,
+      }),
+      credentials: "include", // Ensures cookies (if used) are stored
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed");
+    }
+
+    console.log("Login successful:", data);
+    router.push("/admindashboard"); 
+  } catch (error) {
+    errorMessage.value = error.message; // Show error message in UI
   }
 };
 </script>
@@ -35,9 +50,9 @@ const login = () => {
       <h2 class="text-2xl font-semibold text-center mb-6">Admin Login</h2>
       <form @submit.prevent="login" class="space-y-4">
         <input 
-          type="email" 
-          v-model="email" 
-          placeholder="Email" 
+          type="text" 
+          v-model="codename" 
+          placeholder="alias ..." 
           class="w-full p-3 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500" 
           required
         />
